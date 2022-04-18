@@ -1,0 +1,110 @@
+windows 
+
+https://npmmirror.com/mirrors/node/v16.14.2/node-v16.14.2-x64.msi
+
+https://www.csdn.net/tags/MtTaMg0sOTcxNzc4LWJsb2cO0O0O.html
+
+不一定用得上
+https://blog.csdn.net/oqzuser1234asd/article/details/116169889?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522162873492516780265435752%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=162873492516780265435752&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-3-116169889.pc_search_result_control_group&utm_term=Successfully+installed+Python+2.7&spm=1018.2226.3001.4187
+
+nass 版本问题
+https://blog.csdn.net/qq_17555933/article/details/119463767?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_aa&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_aa&utm_relevant_index=1
+
+linux
+
+https://blog.csdn.net/qq_21910631/article/details/105839196
+https://www.cnblogs.com/klvchen/p/12923984.html
+
+
+mkdir /data/tools -p && cd /data/tools
+wget https://nodejs.org/download/release/v10.16.0/node-v10.16.0-linux-x64.tar.gz
+tar zxvf node-v10.16.0-linux-x64.tar.gz
+mv node-v10.16.0-linux-x64 /usr/local/node-v10.16.0
+# 修改 PATH
+vi /etc/profile
+export NODEJS=/usr/local/node-v10.16.0
+export PATH=$PATH:$NODEJS/bin
+source /etc/profile
+
+
+npm 设置淘宝源
+npm config set registry http://registry.npm.taobao.org/
+# 检查是否更换成功
+npm config get registry
+
+安装 cnpm
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+node -v
+cnpm -v
+
+安装nginx
+如果没有 nginx，  
+yum install epel-release  epel
+yum update
+
+# 运行此命令安装nginx
+yum -y install nginx
+
+# 安装完成后需要在防火墙中打开80端口
+firewall-cmd --permanent --zone=public --add-port=80/tcp
+
+# 重启防火墙
+systemctl reload firewalld
+
+# 启动nginx
+systemctl start nginx.service
+
+# 查看nginx状态
+systemctl status nginx.service
+
+# 返回根目录
+cd /
+
+# 在根目录下创建 www/site/web目录
+mkdir -p www/site/web
+
+# 找到nginx配置文件位置
+nginx -V
+
+# 编辑nginx配置文件
+vim /etc/nginx/nginx.conf
+修改nginx的配置文件，配置80端口，监听的站点目录为 www/site/web
+  listen       80;
+        listen       [::]:80;
+        server_name  _;
+        root         /usr/share/nginx/html; =>www/site/web
+		
+# 重启nginx服务
+systemctl reload nginx.service
+
+https://www.zlprime.cn/archives/1277.html 
+
+node插件不显示时
+https://blog.csdn.net/qq_33286909/article/details/123004365
+
+npm -v
+node -v
+npm install      # 下载工作区npm包
+rm -rf ./dist/*  # 删除dist目录下的所有文件,即删除当前jenkins工作区打包后的文件
+npm run build    # 执行打包命令
+rm -rf /www/web/site/*   # 删除服务器上/www/web/site/ 目录下的所有文件
+cp -rf ./dist/* /www/web/site  #把构建工作区dist目录里的文件复制到服务器/www/web/site文件夹下
+
+chown -R jenkins:jenkins /www/web/site
+
+403
+如果在浏览器中访问，我们的项目，出现了 403 Forbidd，有可能是由于SELinux设为开启的原因。
+
+首先查看本机SELinux的开启状态，如果SELinux status参数为enabled即为开启状态。
+
+/usr/sbin sestatus -v
+临时关闭SELinux
+
+setenforce 0
+如果临时关闭后，刷新浏览器可以正常访问。我们可以修改配置文件 /etc/selinux/config，将SELINUX=enforcing改为SELINUX=disabled，并重启系统。
+
+vim /etc/selinux/config
+
+https://www.zlprime.cn/archives/1277.html 
+
