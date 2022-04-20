@@ -1,0 +1,161 @@
+主机访问vitualbox 
+https://www.jianshu.com/p/b8038ca9fcb7
+
+docker 安装 
+jenkins 
+
+ https://blog.csdn.net/qq_37862114/article/details/123786059
+ 
+1.拉取镜像
+docker pull jenkins/jenkins:2.289.3-lts-centos
+#
+2.创建本地数据卷
+
+mkdir -p /var/jenkins_home
+
+是为了映射镜像容器中/var/jenkins_home文件夹的内容
+3.修改文件夹的权限
+
+chmod 777 /var/jenkins_home
+
+4.创建Jenkins容器并运行
+
+docker run -d --name lzl_jenkins -p 8040:8080 -p 50000:50000 -v /usr/jenkins_home/:/var/jenkins_home jenkins/jenkins:2.289.3-lts-centos
+
+-d 表示后台运行容器
+–name 给容器起一个名字
+-p 8040:8080 端口映射，8080端口有用，随便映射一个8040
+-v /usr/jenkins_home/:/var/jenkins_home 把后面的数据卷映射到前者
+浏览器输入ip:8040访问
+不建议使用docker 安装Jenkins 原因：
+
+Jenkins需要依赖Java、git、maven
+使用docker安装Jenkins，需要每次把Java、git、maven映射到Jenkins的容器中，比较麻烦
+
+centos7 直接安装Jenkins
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins
+配置Jenkins接口
+
+vi /etc/sysconfig/jenkins
+1
+找到修改端口号：
+JENKINS_PORT=“8080”//8080端口不占用可以不修改
+
+启动Jenkins
+
+service jenkins start/stop/restart
+
+开防火墙
+firewall-cmd --list-ports
+
+firewall-cmd --permanent --zone=public --add-port=8080/tcp
+
+systemctl reload firewalld
+
+修改 vi hudson.model.UpdateCenter.xml里的内容
+将 url 修改为 清华大学官方镜像：
+https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+ 
+安装jdk 
+ yum list installed | grep java
+    yum search java | grep jdk
+    yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel #-y表示默认同意安装，不需确认
+    java -version
+     cd /usr/lib/jvm
+     ll
+     vi /etc/profile
+     添加
+# set java8 environment  
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-1.el7_9.x86_64
+export PATH=$PATH:$JAVA_HOME/bin  
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar  
+
+source /etc/profile
+echo ${JAVA_HOME}
+
+安装maven
+maven下载地址：https://maven.apache.org/download.cgi
+wget https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz  
+ 
+tar zvxf apache-maven-3.8.5-bin.tar.gz
+ 
+ 打开配置文件conf/settings.xml，在mirrors（镜像）节点添加以下内容
+
+<mirror>
+      <id>alimaven</id>
+      <name>aliyun maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      <mirrorOf>central</mirrorOf>       
+</mirror>
+
+使用命令vi /etc/profile编辑文件，在最下面添加以下内容（MAVEN_HOME是刚才解压maven的路径）
+
+export MAVEN_HOME=/usr/apache-maven-3.8.5
+export PATH=$MAVEN_HOME/bin:$PATH
+刷新环境变量
+
+source /etc/profile
+运行mvn –v
+
+安装git
+下载地址：  https://github.com/git/git/tags
+ wget https://github.com/git/git/archive/v2.17.0.tar.gz
+ tar -zxvf v2.17.0.tar.gz
+ yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMake
+ 
+ yum remove git 
+ cd git-2.17.0 ，然后执行编译，命令为 make prefix=/usr/local/git all 耐心等待编译即可；.
+ 安装Git至/usr/local/git路径，命令为 make prefix=/usr/local/git install ；
+
+打开环境变量配置文件，命令 vim /etc/profile ，在底部加上Git相关配置信息：
+export PATH=/usr/local/git/bin:$PATH
+
+
+然后保存，退出。输入命令 git --version ，查看安装的git版本，校验通过，安装成功。
+  
+https://blog.csdn.net/qq_41936659/article/details/122992024
+
+pre  
+
+#将应用停止
+#stop.sh
+#!/bin/bash
+echo "Stopping SpringBoot Application"
+sp_pid=`ps -ef | grep redisdemo-1.0-SNAPSHOT.jar | grep -v grep | awk '{print $2}'`
+if [ -z "$sp_pid" ];
+then
+ echo "[ not find sp-tomcat pid ]"
+else
+ echo "find result: $sp_pid "
+ kill -9 $sp_pid
+fi
+
+
+build 
+
+clean package -Dmaven.test.skip=true 
+
+
+Post
+
+echo "startUp"
+#startup.sh 启动项目
+echo "授予当前用户权限"
+chmod 777 /var/lib/jenkins/workspace/project/redisdemo/target/redisdemo-1.0-SNAPSHOT.jar
+echo "执行"
+sleep 1s
+BUILD_ID=dontKillMe nohup java -Xms1024M -Xmx1024M -XX:PermSize=256M -XX:MaxNewSize=256M -XX:MaxPermSize=256M -jar /var/lib/jenkins/workspace/project/redisdemo/target/redisdemo-1.0-SNAPSHOT.jar >> /dev/null 2>&1 &
+echo "startEnd"
+
+
+
+
+
+
+
+
+
+  
