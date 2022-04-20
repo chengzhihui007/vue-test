@@ -32,6 +32,10 @@ npm config set registry http://registry.npm.taobao.org/
 # 检查是否更换成功
 npm config get registry
 
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
 安装 cnpm
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 
