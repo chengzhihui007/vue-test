@@ -1,9 +1,9 @@
 <template>
     <div class="sys-page" v-once>
         <app-title title="介绍"></app-title>
-        <div class="page-content">
+<!--        <div class="page-content">
             <app-notes>
-                该部分组件为本系统自行开发的组件（包括对第三方组件的封装），不包括纯粹的第三方组件。系统组件仅为通用的大众化组件，需注意和项目组件进行区分。全部系统组件文件位于 src/components/platformCom 
+                该部分组件为本系统自行开发的组件（包括对第三方组件的封装），不包括纯粹的第三方组件。系统组件仅为通用的大众化组件，需注意和项目组件进行区分。全部系统组件文件位于 src/components/platformCom
             </app-notes>
             <app-section title="使用方法">
                 <div class="sys-article">
@@ -27,7 +27,7 @@
                     <p>辅助类：文档辅助说明及其他组件部分，可能不会应用在正式产品中，该类别可以不引入到正式产品中</p>
                 </div>
             </app-section>
-        </div>
+        </div>-->
     </div>
 </template>
 <script>

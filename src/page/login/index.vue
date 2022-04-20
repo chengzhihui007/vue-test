@@ -6,8 +6,8 @@
             </div>
             <div class="form-group">
                 <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px">
-                    <el-form-item prop="name">
-                        <el-input v-model="loginForm.name" type="text" :placeholder="$t('global.username')"></el-input>
+                    <el-form-item prop="username">
+                        <el-input v-model="loginForm.username" type="text" :placeholder="$t('global.username')"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
                         <el-input v-model="loginForm.password" type="password" :placeholder="$t('global.password')"></el-input>
@@ -21,14 +21,14 @@
                 </el-form>
                 <div v-if="sysMsg" class="err-msg">{{sysMsg}}</div>
             </div>
-            <div class="lang-toggle">
-                <span :class="{cur: lang=='zhCN'}" @click="changeLang('zhCN')">中</span> | 
+<!--            <div class="lang-toggle">
+                <span :class="{cur: lang=='zhCN'}" @click="changeLang('zhCN')">中</span> |
                 <span :class="{cur: lang=='en'}" @click="changeLang('en')">En</span>
-            </div>
-            <div class="lang-toggle">
-                <span :class="{cur: theme=='theme-default'}" @click="changeTheme('theme-default')">浅</span> | 
+            </div>-->
+<!--            <div class="lang-toggle">
+                <span :class="{cur: theme=='theme-default'}" @click="changeTheme('theme-default')">浅</span> |
                 <span :class="{cur: theme=='theme-dark'}" @click="changeTheme('theme-dark')">深</span>
-            </div>
+            </div>-->
             <div class="tip">
                 <p>{{$t('global.loginTip')}}</p>
             </div>
@@ -44,12 +44,12 @@ export default {
     data() {
         return {
             loginForm: {
-                name: '',
+                username: '',
                 password: '',
                 captcha: ''
             },
             loginRules: {
-                name: [
+                username: [
                     {required: true, message: '', trigger: 'blur'}
                 ],
                 password :[
@@ -90,10 +90,11 @@ export default {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
                     this.login({
-                        name: this.loginForm.name,
+                        username: this.loginForm.username,
                         password: this.loginForm.password
                     }).then(res => {
-                        if(res.login){
+                        console.log(res+"--------")
+                        if(res.code == 200){
                             this.$router.push('home')
                         } else {
                             this.sysMsg = res.message
@@ -120,7 +121,7 @@ export default {
             this.$store.commit("setThemeColor", val)
         },
         setErrMsg(){
-            this.loginRules.name[0].message = this.$t('global.errMsg.inputRequired', {cont: this.$t('global.username')})
+            this.loginRules.username[0].message = this.$t('global.errMsg.inputRequired', {cont: this.$t('global.username')})
             this.loginRules.password[0].message = this.$t('global.errMsg.inputRequired', {cont: this.$t('global.password')})
             this.loginRules.captcha[0].message = this.$t('global.errMsg.inputRequired', {cont: this.$t('global.captcha')})
         }

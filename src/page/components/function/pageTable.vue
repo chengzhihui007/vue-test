@@ -1,7 +1,7 @@
 <template>
     <div class="sys-page">
-        <app-title title="统一分页插件"></app-title>
-        <div class="page-content">
+        <app-title title="功能2"></app-title>
+<!--        <div class="page-content">
             <div class="article">
                 <p>该组件为ElementUI的分页组件二次封装，以实现统一的分页设置。分页所有方法统一继承自ElementUI</p>
             </div>
@@ -20,7 +20,7 @@
                     </el-table-column>
                 </el-table>
             </app-section>
-        </div>
+        </div>-->
     </div>
 </template>
 

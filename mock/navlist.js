@@ -4,7 +4,7 @@ var data = [
         name: '首页'
     },
     {
-        name: '系统组件',
+        name: 'BOE1',
         child: [
             {
                 name: '介绍',
@@ -15,46 +15,47 @@ var data = [
                 child: [
                     {
                         path: '/components/permission',
-                        name: '详细鉴权'
+                        name: '功能1'
                     },
                     {
                         path: '/components/pageTable',
-                        name: '表格分页'
+                        name: '功能2'
                     }
                 ]
-            },
-            {
-                name: '布局类',
-                child: [
-                    {
-                        path: '/components/pageTitle',
-                        name: '页面标题'
-                    },
-                    {
-                        path: '/components/pageSection',
-                        name: '子区域'
-                    },
-                    {
-                        path: '/components/pageSearch',
-                        name: '搜索条'
-                    },
-                    {
-                        path: '/components/pageToolbar',
-                        name: '工具条'
-                    }
-                ]
-            },
-            {
-                name: '辅助类',
-                child: [
-                    {
-                        path: '/components/pageNotes',
-                        name: '引用说明'
-                    }
-                ]
-            }
+             }
+            // ,
+            // {
+            //     name: '布局类',
+            //     child: [
+            //         {
+            //             path: '/components/pageTitle',
+            //             name: '页面标题'
+            //         },
+            //         {
+            //             path: '/components/pageSection',
+            //             name: '子区域'
+            //         },
+            //         {
+            //             path: '/components/pageSearch',
+            //             name: '搜索条'
+            //         },
+            //         {
+            //             path: '/components/pageToolbar',
+            //             name: '工具条'
+            //         }
+            //     ]
+            // },
+            // {
+            //     name: '辅助类',
+            //     child: [
+            //         {
+            //             path: '/components/pageNotes',
+            //             name: '引用说明'
+            //         }
+            //     ]
+            // }
         ]
-    },
+    }/*,
     {
         name: '完整示例',
         child: [
@@ -80,7 +81,7 @@ var data = [
     {
         path: '/theme',
         name: '主题切换'
-    }
+    }*/
 ]
 
 export default [{

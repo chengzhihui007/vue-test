@@ -1,7 +1,8 @@
 <template>
     <div class="sys-page" v-once>
-        <app-title title="前言"></app-title>
-        <div class="page-content">
+        BOE
+<!--        <app-title title="前言"></app-title>-->
+<!--        <div class="page-content">
             <app-notes>
                 <p>本项目以VueJS作为核心，ElementUI为UI框架，制作的大型单页面管理系统。本项目实现完全前后端分离，前端高度组件化、模块化，良好的解决了前端开发过程中面对的各种难题。</p>
                 <p>本框架拥有完整的登录/注销过程、权限加载及校验、自动重新登录、XSS防注入（待做）、XSRF解决方案、页面加载进度条等前后端分离必备功能。</p>
@@ -72,7 +73,7 @@
                     <p>NodeJS： <a target="_blank" href="http://nodejs.cn/api/">http://nodejs.cn/api/</a>&nbsp;&nbsp;&nbsp;——运行于服务器端的JS引擎。想实现某些类似Webpack或者Gulp功能时需要学习一下。做服务端必学</p>
                 </div>
             </app-section>
-        </div>
+        </div>-->
     </div>
 </template>
 

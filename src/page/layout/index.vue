@@ -2,13 +2,13 @@
     <div class="wrapper">
         <template v-if="layout =='left'">
             <header-bar v-once>
-                <p slot="logo">VueJS模板系统</p>
+                <p slot="logo">BOE</p>
             </header-bar>
             <nav-bar :layout="layout"></nav-bar>
         </template>
         <template v-if="layout == 'top'">
             <header-bar>
-                <p slot="logo">VueJS模板系统</p>
+                <p slot="logo">BOE</p>
                 <template slot="topnav">
                     <nav-bar :layout="layout"></nav-bar>
                 </template>

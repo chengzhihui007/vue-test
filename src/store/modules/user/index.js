@@ -7,6 +7,7 @@ const state = {
 
 const mutations = {
     setName: (state, data) => {
+        console.log("state:"+state+"---data:"+data+"---------------")
         if(data){
             Cookies.set('userName', encodeURIComponent(data), {
                 expires: 365
@@ -14,7 +15,8 @@ const mutations = {
         } else {
             Cookies.remove('userName')
         }
-        state.name = data
+
+        state.username = data
     }
 }
 

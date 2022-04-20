@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import axios from '@/util/ajax'
 import Auth from '@/util/auth'
+import store from "../../index";
 
 const state = {
     token: '',
@@ -35,9 +36,13 @@ const actions = {
                     ...userInfo
                 }
             }).then(res => {
-                if(res.login){
-                    commit('setToken', res.token)
-                    commit('user/setName', res.name, { root: true })
+                console.log(res)
+                if(res.code == 200){
+                    const jwt = res.data.Authorization
+                    // 把数据共享出去
+                    commit('setToken', jwt)
+                    store.state.user.token = jwt
+                    commit('user/setName', res.data.username, { root: true })
                 }
                 resolve(res)
             })
@@ -47,6 +52,7 @@ const actions = {
     // 登出
     logout({commit}) {
         return new Promise((resolve) => {
+            console.log('logout---')
             commit('setToken', '')
             commit('user/setName', '', { root: true })
             commit('tagNav/removeTagNav', '', {root: true})
@@ -64,8 +70,9 @@ const actions = {
 
             // 重新登录时校验Token是否存在，若不存在则获取
             if(!token){
-                dispatch("getNewToken").then(() => {
-                    commit('setToken', state.token)
+                dispatch("logout").then(() => {
+                    //commit('setToken', state.token)
+                    console.log("logout")
                 })
             } else {
                 commit('setToken', token)
@@ -97,11 +104,11 @@ const actions = {
         return new Promise((resolve) =>{
             axios({
                 url: '/user/navlist',
-                methods: 'post',
+                methods: 'get',
                 data: {}
             }).then((res) => {
-                commit("setNavList", res)
-                resolve(res)
+                commit("setNavList", res.data)
+                resolve(res.data)
             })
         })
     },
@@ -111,7 +118,10 @@ const actions = {
         return new Promise((resolve) =>{
             let permissionList = []
             // 将菜单数据扁平化为一级
+            console.dir(resolve+"-resolve")
+
             function flatNavList(arr){
+                console.dir(arr+"----arr")
                 for(let v of arr){
                     if(v.child && v.child.length){
                         flatNavList(v.child)

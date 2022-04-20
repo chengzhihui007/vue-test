@@ -8,17 +8,20 @@ import store from '../store'
 import staticRoute from './staticRoute'
 import whiteList from './whiteList'
 
-var permissionList = []
+
+let permissionList;
+permissionList = []
 
 function initRoute(router){
     return new Promise((resolve) => {
         if(permissionList.length == 0){
             console.log("没有权限数据，正在获取")
-            store.dispatch('auth/getNavList').then(() => {
-                store.dispatch('auth/getPermissionList').then((res) => {
+            store.dispatch('auth/getNavList').then((res) => {
                     console.log("权限列表生成完毕")
                     permissionList = res
+                    console.log(res+'--------------')
                     res.forEach(function(v){
+                        console.log(v+"-----v")
                         let routeItem = router.match(v.path)
                         if(routeItem){
                             routeItem.meta.permission = v.permission ? v.permission : []
@@ -26,8 +29,13 @@ function initRoute(router){
                         }
                     })
                     resolve()
+                }).catch(() => {
+                    console.log('error')
+                    store.dispatch('auth/logout').then(()=>{
+
+                    })
                 })
-            })
+
         } else{
             console.log("已有权限数据")
             resolve()
@@ -49,7 +57,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // 开启进度条
     NProgress.start();
-    
+
     // 判断用户是否处于登录状态
     // debugger
     if (Auth.isLogin()) {
@@ -64,8 +72,11 @@ router.beforeEach((to, from, next) => {
             initRoute(router).then(() => {
                 let isPermission = false
                 console.log("进入权限判断")
+                console.log(permissionList+"---permissionList")
                 permissionList.forEach((v) => {
                     // 判断跳转的页面是否在权限列表中
+                    console.log(v.path+'---v.path')
+                    console.log(to.fullPath+'----to.fullPaht')
                     if(v.path == to.fullPath){
                         isPermission = true
                     }

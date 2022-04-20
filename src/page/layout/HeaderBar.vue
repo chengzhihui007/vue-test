@@ -10,19 +10,19 @@
                     <el-dropdown @command="userOperation">
                         <span class="user">{{username}}<i class="el-icon-caret-bottom el-icon--right"></i></span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="editPaw">{{$t('global.editpassword')}}</el-dropdown-item>
+<!--                            <el-dropdown-item command="editPaw">{{$t('global.editpassword')}}</el-dropdown-item>-->
                             <el-dropdown-item command="logout">{{$t('global.logout')}}</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </li>
-                <li>
+<!--                <li>
                     <span class="lang" :class="{cur: lang=='zhCN'}" @click="changeLang('zhCN')">中</span>
                     <span>/</span>
                     <span class="lang" :class="{cur: lang=='en'}" @click="changeLang('en')">EN</span>
-                </li>
+                </li>-->
             </ul>
         </div>
-        <el-dialog title="修改密码" :visible.sync="dialog.editPaw.show" :modal-append-to-body="false" custom-class="editPawDialog">
+<!--        <el-dialog title="修改密码" :visible.sync="dialog.editPaw.show" :modal-append-to-body="false" custom-class="editPawDialog">
             <el-form :model="editPaw" :rules="editPawRules" ref="editPaw" label-width="100px" >
                 <el-form-item label="旧密码" prop="oldPaw">
                     <el-input v-model="editPaw.oldPaw" auto-complete="off"></el-input>
@@ -37,9 +37,9 @@
             <div class="textC">
                 <el-button type="primary" @click="editPawSubmit">保存</el-button>
             </div>
-        </el-dialog>
+        </el-dialog>-->
     </div>
-    
+
 </template>
 
 <script>
@@ -115,7 +115,7 @@ export default {
         },
         userOperation(command){
             switch(command){
-                case 'logout': 
+                case 'logout':
                     this.logout()
                     break
                 case 'editPaw':
